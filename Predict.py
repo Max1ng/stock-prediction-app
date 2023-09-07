@@ -76,10 +76,10 @@ class Predict:
 
             #drop "Date" column and predict next day
             currentDaysData = currentDaysData.drop('Date', axis=1)
-            next_day_prediction = self.model.predict(currentDaysData)
+            nextDayPrediction = self.model.predict(currentDaysData)
 
             #update df with predicted value
-            newStockData.at[i+1, 'Close'] = next_day_prediction[0]
+            newStockData.at[i+1, 'Close'] = nextDayPrediction[0]
 
         #make graph of predicted prices
         plt.plot(newStockData['Date'], newStockData['Close'], label='Predicted Close', color='#41dacb')
