@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
 
   # Call Functions class
-    GUI = GUI()
+    
 
     # Create the window
     window = tk.Tk()

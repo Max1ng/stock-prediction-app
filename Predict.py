@@ -4,7 +4,12 @@ import yfinance as yf
 import matplotlib.pyplot as plt
 import datetime
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
+from matplotlib.backends.backend_tkagg import FigureCanvasTk
+import matplotlib.figure as mpl_fig
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+import PIL
+from PIL import Image, ImageTk
+import tkinter as tk
 
 class Predict:
 
@@ -86,21 +91,33 @@ class Predict:
             newStockData.at[i+1, 'Close'] = nextDayPrediction[0]
 
         #make graph of predicted prices
-        fig = plt.plot(newStockData['Date'], newStockData['Close'], label='Predicted Close', color='#41dacb')
-        
-        plt.xlabel('Date')
-        plt.ylabel('Stock Price')
-        plt.title(f'Predicted Stock Prices for {self.ticker}')
-        plt.legend()
-        ax = plt.gca()
+        fig = plt.figure(figsize=(6, 4), dpi=100)
+
+        # Add your plot to the Figure
+        ax = fig.add_subplot(111)
+        ax.plot(newStockData['Date'], newStockData['Close'], label='Predicted Close', color='#41dacb')
+        ax.set_xlabel('Date')
+        ax.set_ylabel('Stock Price')
+        ax.set_title(f'Predicted Stock Prices for {self.ticker}')
+        ax.legend()
         ax.set_facecolor("#dbe4eb")
-        
-        if self.graph_canvas:
-            self.graph_canvas.get_tk_widget().destroy()
-        canvas = FigureCanvasTkAgg(fig, master=frame)
-        self.graph_canvas = canvas  # Store the current graph canvas
-        canvas_widget = canvas.get_tk_widget()
-        canvas_widget.pack()
+
+        # Render the Figure to a PNG image
+        canvas = FigureCanvasAgg(fig)
+        canvas.draw()
+        width, height = fig.get_size_inches() * fig.get_dpi()
+        img = canvas.tostring_rgb()
+        photo = PIL.ImageTk.PhotoImage(PIL.Image.frombytes("RGB", (int(width), int(height)), img))
+
+        # If there's an existing image label, remove it
+        if hasattr(self, "graph_label"):
+            self.graph_label.destroy()
+
+        # Create a Label to display the image
+        self.graph_label = tk.Label(frame, image=photo)
+        self.graph_label.photo = photo  # Store a reference to avoid garbage collection
+        self.graph_label.pack()
+
 
 
         plt.show()
