@@ -4,6 +4,10 @@ from GUI import GUI
 import tkinter as tk
 from tkinter import ttk
 
+def graphFunctions(frame1, frame2):
+    predict.predictNextYear(frame2)
+    GUI.createGraph(frame1)
+
 
 if __name__ == "__main__":
     predict = Predict()
@@ -29,11 +33,14 @@ if __name__ == "__main__":
     historicalGraph = tk.Text(master=window)
     historicalGraph.pack()
 
-    """ predictedGraph = tk.Text(master=window)
-    predictedGraph.pack(side='right') """
+    predictedGraph = tk.Text(master=window)
+    predictedGraph.pack(side='right')
   
-    graph_frame = ttk.Frame(historicalGraph)
-    graph_frame.pack()
+    graphFrame = ttk.Frame(historicalGraph)
+    graphFrame.pack()
+
+    graphFrame2 = ttk.Frame(predictedGraph)
+    graphFrame2.pack()
 
     tickerEntry = tk.StringVar(value='^GSPC')
     entry = ttk.Entry(window, textvariable=tickerEntry)
@@ -42,7 +49,7 @@ if __name__ == "__main__":
     tickerButton = ttk.Button(master=window, text='Change Ticker', command=lambda: GUI.updateTicker(tickerEntry.get()))
     tickerButton.pack()
 
-    testButton = ttk.Button(master=window, text='Graph', command=lambda: [GUI.createGraph(graph_frame), predict.predictNextYear()])
+    testButton = ttk.Button(master=window, text='Graph', command=lambda: graphFunctions(graphFrame, graphFrame2))
     testButton.pack()
 
     close_button = ttk.Button(master=window, text='Close Window', command=lambda: GUI.destroyWindow(window))

@@ -3,6 +3,8 @@ from sklearn.linear_model import LinearRegression
 import yfinance as yf
 import matplotlib.pyplot as plt
 import datetime
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 
 class Predict:
 
@@ -10,6 +12,8 @@ class Predict:
     def __init__(self) -> None:
         #stock ticker
         self.ticker = None
+
+        self.graph_canvas = None
 
         self.x = None
         self.y = None
@@ -50,7 +54,7 @@ class Predict:
         self.model.fit(self.x, self.y)
 
     #time to predict :)
-    def predictNextYear(self):
+    def predictNextYear(self, frame):
         #set todays date and one year from today
         todaysDate = datetime.date.today()
         todaysDateNextYr = todaysDate + datetime.timedelta(days=365)
@@ -82,7 +86,7 @@ class Predict:
             newStockData.at[i+1, 'Close'] = nextDayPrediction[0]
 
         #make graph of predicted prices
-        plt.plot(newStockData['Date'], newStockData['Close'], label='Predicted Close', color='#41dacb')
+        fig = plt.plot(newStockData['Date'], newStockData['Close'], label='Predicted Close', color='#41dacb')
         
         plt.xlabel('Date')
         plt.ylabel('Stock Price')
@@ -90,6 +94,15 @@ class Predict:
         plt.legend()
         ax = plt.gca()
         ax.set_facecolor("#dbe4eb")
+        
+        if self.graph_canvas:
+            self.graph_canvas.get_tk_widget().destroy()
+        canvas = FigureCanvasTkAgg(fig, master=frame)
+        self.graph_canvas = canvas  # Store the current graph canvas
+        canvas_widget = canvas.get_tk_widget()
+        canvas_widget.pack()
+
+
         plt.show()
 
         print(f"Predicted stock prices: {newStockData}")

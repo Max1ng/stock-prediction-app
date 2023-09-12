@@ -2,7 +2,8 @@ import datetime
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
 from tkinter import ttk
-
+import yfinance as yf
+import mplfinance as mpf
 class GUI: 
     def __init__(self) -> None:
         self.ticker = '^GSPC'
@@ -52,3 +53,5 @@ class GUI:
         if window.winfo_exists():
             window.destroy()
             exit()
+
+    
