@@ -2,6 +2,7 @@
 
 #imports
 from Predict import Predict
+from GUI import GUI
 
 
 
