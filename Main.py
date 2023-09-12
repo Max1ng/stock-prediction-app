@@ -3,7 +3,8 @@
 #imports
 from Predict import Predict
 from GUI import GUI
-
+import tkinter as tk
+from tkinter import ttk
 
 
 if __name__ == "__main__":
@@ -14,7 +15,41 @@ if __name__ == "__main__":
     predict.predictNextYear()
 
 
+  # Call Functions class
+    GUI = GUI()
 
+    # Create the window
+    window = tk.Tk()
+    
+    window.title('YFinance')
+    window.geometry('800x800')
+
+
+    label = ttk.Label(master=window, text='This is a test', font=('Ink Free',))
+    label.pack()
+
+    text = tk.Text(master=window)
+    text.pack()
+
+    graph_frame = ttk.Frame(text)
+    graph_frame.pack()
+
+    tickerEntry = tk.StringVar(value='^GSPC')
+    entry = ttk.Entry(window, textvariable=tickerEntry)
+    entry.pack()
+
+    tickerButton = ttk.Button(master=window, text='Change Ticker', command=lambda: GUI.updateTicker(tickerEntry.get()))
+    tickerButton.pack()
+
+    testButton = ttk.Button(master=window, text='Graph', command=lambda: GUI.createGraph(graph_frame))
+    testButton.pack()
+
+    close_button = ttk.Button(master=window, text='Close Window', command=lambda: GUI.destroyWindow(window))
+    close_button.pack()
+
+    # Open window
+    window.protocol("WM_DELETE_WINDOW", lambda: GUI.windowClose(window))
+    window.mainloop()
 
 
 

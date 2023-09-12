@@ -77,11 +77,6 @@ def main():
     window.title('YFinance')
     window.geometry('800x800')
 
-    """ def on_closing():
-        if functions.graph_canvas:
-            functions.graph_canvas.get_tk_widget().destroy()  # Destroy the graph canvas before closing the window
-            window.destroy() """
-
 
 
     label = ttk.Label(master=window, text='This is a test', font=('Ink Free',))
