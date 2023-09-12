@@ -1,5 +1,3 @@
-
-
 #imports
 from Predict import Predict
 from GUI import GUI
@@ -12,7 +10,7 @@ if __name__ == "__main__":
     predict.setTicker('AAPL')
     predict.createDF()
     predict.trainModel()
-    predict.predictNextYear()
+    #predict.predictNextYear()
 
 
   # Call Functions class
@@ -28,10 +26,13 @@ if __name__ == "__main__":
     label = ttk.Label(master=window, text='This is a test', font=('Ink Free',))
     label.pack()
 
-    text = tk.Text(master=window)
-    text.pack()
+    historicalGraph = tk.Text(master=window)
+    historicalGraph.pack()
 
-    graph_frame = ttk.Frame(text)
+    """ predictedGraph = tk.Text(master=window)
+    predictedGraph.pack(side='right') """
+  
+    graph_frame = ttk.Frame(historicalGraph)
     graph_frame.pack()
 
     tickerEntry = tk.StringVar(value='^GSPC')
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     tickerButton = ttk.Button(master=window, text='Change Ticker', command=lambda: GUI.updateTicker(tickerEntry.get()))
     tickerButton.pack()
 
-    testButton = ttk.Button(master=window, text='Graph', command=lambda: GUI.createGraph(graph_frame))
+    testButton = ttk.Button(master=window, text='Graph', command=lambda: [GUI.createGraph(graph_frame), predict.predictNextYear()])
     testButton.pack()
 
     close_button = ttk.Button(master=window, text='Close Window', command=lambda: GUI.destroyWindow(window))
