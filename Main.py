@@ -15,12 +15,9 @@ if __name__ == "__main__":
     predict.createDF()
     predict.trainModel()
     #predict.predictNextYear()
-
-
-  # Call Functions class
     
 
-    # Create the window
+    #create the window
     window = tk.Tk()
     
     window.title('YFinance')
@@ -55,8 +52,9 @@ if __name__ == "__main__":
     close_button = ttk.Button(master=window, text='Close Window', command=lambda: GUI.destroyWindow(window))
     close_button.pack()
 
-    # Open window
+    #close window on close 🙏
     window.protocol("WM_DELETE_WINDOW", lambda: GUI.windowClose(window))
+    #open window
     window.mainloop()
 
 
