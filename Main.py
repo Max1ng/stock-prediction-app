@@ -5,8 +5,9 @@ import tkinter as tk
 from tkinter import ttk
 
 def graphFunctions(frame1, frame2):
-    predict.predictNextYear(frame2)
     GUI.createGraph(frame1)
+    predict.predictNextYear(frame2)
+   
 
 
 if __name__ == "__main__":
@@ -16,41 +17,44 @@ if __name__ == "__main__":
     predict.trainModel()
     #predict.predictNextYear()
     
+    GUI = GUI()
 
     #create the window
     window = tk.Tk()
     
     window.title('YFinance')
-    window.geometry('800x800')
+    window.geometry('1200x800')
 
 
     label = ttk.Label(master=window, text='This is a test', font=('Ink Free',))
     label.pack()
 
+    tickerButton = ttk.Button(master=window, text='Change Ticker', command=lambda: GUI.updateTicker(tickerEntry.get()))
+    tickerButton.pack(side='bottom')
+
+    testButton = ttk.Button(master=window, text='Graph', command=lambda: graphFunctions(graphFrame, graphFrame2))
+    testButton.pack(side='bottom')
+
+    close_button = ttk.Button(master=window, text='Close Window', command=lambda: GUI.destroyWindow(window))
+    close_button.pack(side='bottom')
+
     historicalGraph = tk.Text(master=window)
-    historicalGraph.pack()
+    historicalGraph.pack(side='left', fill='both', expand=False)
 
     predictedGraph = tk.Text(master=window)
-    predictedGraph.pack(side='right')
+    predictedGraph.pack(side='right', fill='both', expand=False)
   
-    graphFrame = ttk.Frame(historicalGraph)
-    graphFrame.pack()
+    graphFrame = ttk.Frame(historicalGraph, width=600, height=400)
+    graphFrame.pack(fill='both', expand=False)
 
-    graphFrame2 = ttk.Frame(predictedGraph)
-    graphFrame2.pack()
+    graphFrame2 = ttk.Frame(predictedGraph, width=600, height=400)
+    graphFrame2.pack(fill='both', expand=False)
 
     tickerEntry = tk.StringVar(value='^GSPC')
     entry = ttk.Entry(window, textvariable=tickerEntry)
     entry.pack()
 
-    tickerButton = ttk.Button(master=window, text='Change Ticker', command=lambda: GUI.updateTicker(tickerEntry.get()))
-    tickerButton.pack()
-
-    testButton = ttk.Button(master=window, text='Graph', command=lambda: graphFunctions(graphFrame, graphFrame2))
-    testButton.pack()
-
-    close_button = ttk.Button(master=window, text='Close Window', command=lambda: GUI.destroyWindow(window))
-    close_button.pack()
+    
 
     #close window on close 🙏
     window.protocol("WM_DELETE_WINDOW", lambda: GUI.windowClose(window))

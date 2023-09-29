@@ -109,18 +109,16 @@ class Predict:
         img = canvas.tostring_rgb()
         photo = PIL.ImageTk.PhotoImage(PIL.Image.frombytes("RGB", (int(width), int(height)), img))
 
-        # If there's an existing image label, remove it
         if hasattr(self, "graph_label"):
             self.graph_label.destroy()
 
-        # Create a Label to display the image
         self.graph_label = tk.Label(frame, image=photo)
-        self.graph_label.photo = photo  # Store a reference to avoid garbage collection
+        self.graph_label.photo = photo 
         self.graph_label.pack()
 
 
 
-        plt.show()
+        #plt.show()
 
         print(f"Predicted stock prices: {newStockData}")
 

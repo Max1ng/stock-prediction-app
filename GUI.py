@@ -32,15 +32,16 @@ class GUI:
                 widget.destroy()
 
             if self.graph_canvas:
-                self.graph_canvas.get_tk_widget().destroy()  # Destroy the previous graph canvas if it exists
+                self.graph_canvas.get_tk_widget().destroy() 
 
             canvas = FigureCanvasTkAgg(fig, master=frame)
-            self.graph_canvas = canvas  # Store the current graph canvas
+            self.graph_canvas = canvas
             canvas_widget = canvas.get_tk_widget()
-            canvas_widget.pack()
+            canvas_widget.config(width=600, height=400)
+            canvas_widget.pack(fill='both', expand=False)
         except Exception as e:
             print('Invalid ticker!')
-            self.updateTicker('^GSPC')  # Changed 'Functions.updateTicker(self, '^GSPC')' to 'self.updateTicker('^GSPC')'
+            self.updateTicker('^GSPC') 
         else:
             print('Graphed')
 
